@@ -43,7 +43,7 @@ const displayNewses = (newses) => {
   newsContainer.innerHTML = "";
 
   newses.forEach((news) => {
-    console.log(news);
+    // console.log(news);
     const newDiv = document.createElement("div");
     newDiv.classList.add("col");
     newDiv.innerHTML = `
@@ -64,19 +64,25 @@ const displayNewses = (newses) => {
                                 news.author.img
                               }" alt="" class="image mx-2">
                               <div>
-                                  <p>${news.author.name} <br>${
-      news.author.published_date
+                                  <p>${
+                                    news.author.name
+                                      ? news.author.name
+                                      : "No Author Found"
+                                  } <br>${
+      news.author.published_date ? news.author.published_date : "No Date Found"
     }</p>
                               </div>
                           </div>
                           <div class="d-flex">
                               <i class="fa-regular fa-eye pt-1 me-1"></i>
-                              <p>${news.total_view}</p>
+                              <p>${
+                                news.total_view ? news.total_view : "0 views"
+                              }</p>
                           </div>
                         </div>
-                        <button onclick="loadDetails(${
+                        <button onclick="loadDetails('${
                           news._id
-                        })" class="button-per-news">See Details</button>
+                        }')" class="button-per-news" data-bs-toggle="modal" data-bs-target="#exampleModal">See Details</button>
             </div>
     `;
     newsContainer.appendChild(newDiv);
@@ -85,14 +91,52 @@ const displayNewses = (newses) => {
 
 //Loading Details Of News
 const loadDetails = async (newsId) => {
-  const url = `https://openapi.programming-hero.com/api/news/${newsId}`;
+  const url = `
+  https://openapi.programming-hero.com/api/news/${newsId}
+  `;
   try {
     const res = await fetch(url);
     const data = await res.json();
-    console.log(data.data);
+    displayDetailsInModal(data.data[0]);
   } catch (error) {
     console.log(error);
   }
+};
+
+const displayDetailsInModal = (data) => {
+  console.log(data);
+  const modalTitle = document.getElementById("exampleModalLabel");
+  modalTitle.innerText = data.title;
+
+  const modalContainer = document.getElementById("modal-container");
+  modalContainer.innerHTML = `
+        <img src="${
+          data.image_url ? data.image_url : "No Picture Found"
+        }" class="w-100" alt="">
+        <p>${data.details}</p>
+        <div class="d-flex align-items-center justify-content-between">
+                          <div class="d-flex">
+                              <img src="${
+                                data.author.img
+                              }" alt="" class="image mx-2">
+                              <div>
+                                  <p>${
+                                    data.author.name
+                                      ? data.author.name
+                                      : "No Author Found"
+                                  } <br>${
+    data.author.published_date ? data.author.published_date : "No Date Found"
+  }</p>
+                              </div>
+                          </div>
+                          <div class="d-flex">
+                              <i class="fa-regular fa-eye pt-1 me-1"></i>
+                              <p>${
+                                data.total_view ? data.total_view : "0 views"
+                              }</p>
+                          </div>
+                        </div>
+  `;
 };
 
 // loadNews();
