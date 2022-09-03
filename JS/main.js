@@ -54,7 +54,23 @@ const displayNewses = (newses) => {
                               300
                             )}...</p>
                         </div>
-                    </div>
+                        <div class="d-flex align-items-center justify-content-around">
+                          <div class="d-flex">
+                              <img src="${
+                                news.author.img
+                              }" alt="" class="image mx-2">
+                              <div>
+                                  <p>${news.author.name} <br>${
+      news.author.published_date
+    }</p>
+                              </div>
+                          </div>
+                          <div class="d-flex">
+                              <i class="fa-regular fa-eye pt-1 me-1"></i>
+                              <p>${news.total_view}</p>
+                          </div>
+                        </div>
+            </div>
     `;
     newsContainer.appendChild(newDiv);
   });
