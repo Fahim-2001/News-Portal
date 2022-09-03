@@ -28,9 +28,13 @@ const loadNews = async (id) => {
   const url = `
     https://openapi.programming-hero.com/api/news/category/0${id}
     `;
-  const res = await fetch(url);
-  const data = await res.json();
-  displayNewses(data.data);
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    displayNewses(data.data);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // Display News
@@ -70,10 +74,26 @@ const displayNewses = (newses) => {
                               <p>${news.total_view}</p>
                           </div>
                         </div>
+                        <button onclick="loadDetails(${
+                          news._id
+                        })" class="button-per-news">See Details</button>
             </div>
     `;
     newsContainer.appendChild(newDiv);
   });
 };
+
+//Loading Details Of News
+const loadDetails = async (newsId) => {
+  const url = `https://openapi.programming-hero.com/api/news/${newsId}`;
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    console.log(data.data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // loadNews();
 loadCategories();
