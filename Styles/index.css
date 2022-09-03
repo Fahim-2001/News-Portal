@@ -1,0 +1,14 @@
+.brand-name {
+  border: 2px solid orangered;
+  border-radius: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 5px;
+}
+
+.brand-name-p1 {
+  color: white;
+  background-color: orangered;
+  padding: 8px;
+  margin: 0px;
+}
