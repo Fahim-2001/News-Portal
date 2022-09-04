@@ -39,6 +39,12 @@ const loadNews = async (id) => {
 
 // Display News
 const displayNewses = (newses, catName) => {
+  newses
+    .sort((a, b) => {
+      return a.total_view - b.total_view;
+    })
+    .reverse();
+
   const newsContainer = document.getElementById("news-container");
   newsContainer.innerHTML = "";
   const newsLength = newses.length;
