@@ -38,7 +38,7 @@ const loadNews = async (id) => {
 };
 
 // Display News
-const displayNewses = (newses, catName) => {
+const displayNewses = (newses) => {
   newses
     .sort((a, b) => {
       return a.total_view - b.total_view;
@@ -60,7 +60,6 @@ const displayNewses = (newses, catName) => {
   }
 
   newses.forEach((news) => {
-    // console.log(news);
     const newDiv = document.createElement("div");
     newDiv.classList.add("col");
     newDiv.innerHTML = `
@@ -122,7 +121,6 @@ const loadDetails = async (newsId) => {
 
 //Modal to show detail news
 const displayDetailsInModal = (data) => {
-  console.log(data);
   const modalTitle = document.getElementById("exampleModalLabel");
   modalTitle.innerText = data.title;
 
