@@ -17,7 +17,7 @@ const displayCategories = (categories) => {
   categories.forEach((category) => {
     const newCategory = document.createElement("div");
     newCategory.innerHTML = `
-        <button class="buttons" onclick="loadNews(${category.category_id})">${category.category_name}</button>
+        <button class="buttons" onclick="loadNews('${category.category_id}')">${category.category_name}</button>
     `;
     categoryContainer.appendChild(newCategory);
   });
@@ -26,7 +26,7 @@ const displayCategories = (categories) => {
 //Loading News
 const loadNews = async (id) => {
   const url = `
-    https://openapi.programming-hero.com/api/news/category/0${id}
+    https://openapi.programming-hero.com/api/news/category/${id}
     `;
   try {
     const res = await fetch(url);
@@ -38,9 +38,20 @@ const loadNews = async (id) => {
 };
 
 // Display News
-const displayNewses = (newses) => {
+const displayNewses = (newses, catName) => {
   const newsContainer = document.getElementById("news-container");
   newsContainer.innerHTML = "";
+  const newsLength = newses.length;
+  const numberOfNews = document.getElementById("number-of-news");
+  if (newsLength === 0) {
+    numberOfNews.innerHTML = `
+            <h3 class="text-center bg-warning text-danger p-4">0 items found in this category</h3>
+      `;
+  } else {
+    numberOfNews.innerHTML = `
+            <h3 class="text-center text">${newses.length} items found in this category</h3>
+      `;
+  }
 
   newses.forEach((news) => {
     // console.log(news);
@@ -103,6 +114,7 @@ const loadDetails = async (newsId) => {
   }
 };
 
+//Modal to show detail news
 const displayDetailsInModal = (data) => {
   console.log(data);
   const modalTitle = document.getElementById("exampleModalLabel");
