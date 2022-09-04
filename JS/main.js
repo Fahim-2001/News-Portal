@@ -154,6 +154,4 @@ const displayDetailsInModal = (data) => {
                         </div>
   `;
 };
-
-// loadNews();
 loadCategories();
